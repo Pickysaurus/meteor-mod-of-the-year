@@ -77,6 +77,10 @@ class VotePage extends Component {
         });
     }
 
+    searchOnEnter(event) {
+        if (event.key === "Enter") this.search();
+    }
+
     componentDidMount() {
         const { user, games, gamesLoading } = this.props;
         user && !gamesLoading && !games.length ? this.props.getGames() : undefined;
@@ -92,7 +96,7 @@ class VotePage extends Component {
                 <div>
                     <h2>Vote for your favourite mods!</h2>
                 <div className="search-box">
-                    <input className="search-text" type="text" value={searchQuery} placeholder="Search for a mod..." onChange={this.handleSearchChange.bind(this)} />
+                    <input className="search-text" type="text" value={searchQuery} placeholder="Search for a mod..." onChange={this.handleSearchChange.bind(this)} onKeyPress={this.searchOnEnter.bind(this)} />
                     <input className="search-btn" type="submit" value="Search" disabled={!searchQuery} onClick={this.search.bind(this)} />
                 </div>
                 <Select 

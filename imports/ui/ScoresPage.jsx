@@ -87,9 +87,9 @@ class ScoresPage extends Component {
                 <label>
                 <input type="checkbox" checked={showAdult} onChange={this.props.toggleNSFW} /> Show adult content
                 </label>
-                <WinnersTable entries={this.state.modsOverall} winnerClass="mod-image-large" tableItemName='Mod' adult={showAdult} />
+                <WinnersTable entries={this.state.modsOverall} imageClass="mod-image-large" imageContClass="mod-image-large-cont first" tableItemName='Mod' adult={showAdult} />
                 <h2>Top Authors</h2>
-                <WinnersTable entries={this.state.authorScores} winnerClass="user-image user-image-large" tableItemName="Author" adult={showAdult} />
+                <WinnersTable entries={this.state.authorScores} imageClass="user-image user-image-large" tableItemName="Author" adult={showAdult} />
             </div>
         );
     }
