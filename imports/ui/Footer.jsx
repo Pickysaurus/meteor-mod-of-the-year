@@ -4,7 +4,8 @@ const Footer = () => {
     return (
         <div id="footer">
             <p>This site is not affiliated with Nexus Mods.</p>
-            <p>Pickysaurus (2020)</p>
+            <p>Mike "Pickysaurus" Watling - 2020</p>
+            <p><a href='https://github.com/Pickysaurus/meteor-mod-of-the-year'>Source Code</a></p>
         </div>
     );
 }
