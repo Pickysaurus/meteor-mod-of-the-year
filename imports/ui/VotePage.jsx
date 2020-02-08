@@ -14,19 +14,27 @@ class VotePage extends Component {
             searchQuery: '',
             searchResults: null,
         }
+
+        this.typingTimeout = null;
     }
 
 
     handleSearchChange(event) {
         event.preventDefault();
 
-        this.setState({searchQuery: event.target.value});
+        this.setState({searchQuery: event.target.value}, () => {
+            if (this.typingTimeout) clearTimeout(this.typingTimeout)
+            this.typingTimeout = setTimeout(() => {
+                this.search();
+            }, 500);
+        });
     }
 
     async search() {
         const { activeGames, searchQuery } = this.state;
         const { user, games, gamesLoading, showAdult } = this.props;
         const gameId = activeGames && activeGames.length === 1 ? activeGames[0].id : -1;
+
         Meteor.call('searchMods', gameId, searchQuery, showAdult, (error, result) => {
             if (error) return alert(error);
             this.setState({searchResults: result});
@@ -79,6 +87,10 @@ class VotePage extends Component {
 
     searchOnEnter(event) {
         if (event.key === "Enter") this.search();
+    }
+
+    componentDidUpdate(prevProps) {
+        if ((prevProps.showAdult !== this.props.showAdult) && this.state.searchQuery) this.search(this);
     }
 
     componentDidMount() {

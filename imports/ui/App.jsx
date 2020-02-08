@@ -58,7 +58,7 @@ class App extends Component {
 }
 
 updateGames(games) {
-  this.setState({games: games});
+  this.setState({games: games.sort((a,b) => a.downloads > b.downloads ? -1 : 1)});
 }
 
   render() {
