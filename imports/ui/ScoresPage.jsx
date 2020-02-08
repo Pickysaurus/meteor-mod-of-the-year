@@ -19,6 +19,14 @@ class ScoresPage extends Component {
     }
 
     componentDidUpdate() {
+        this.updateTables();
+    }
+
+    componentDidMount() {
+        this.updateTables();
+    }
+
+    updateTables() {
         const { modsOverall, authorScores, voteCount, nominationCount } = this.state;
         const { allvotes, allNominations} = this.props;
 

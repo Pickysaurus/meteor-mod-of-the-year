@@ -21,8 +21,10 @@ Meteor.methods({
 
         if (userId === author.member_id) throw new Meteor.Error('voted-self');
 
-        const currentVote = Nominations.find({owner: userId, authorId: author.member_id}).fetch();
-        if (currentVote.length) throw new Meteor.Error('already-voted');
+        const authorNominations = Nominations.find({owner: userId}).fetch();
+        if (authorNominations.length >= 10) throw new Meteor.Error('maximum-votes');
+        const currentVote = authorNominations.find(n => n.authorId === author.member_id);
+        if (currentVote) throw new Meteor.Error('already-voted');
 
         author.avatar ? undefined : author.avatar = await getAvatar(author.member_id);
 

@@ -445,7 +445,7 @@ th.third img {
 
 .user-image-large {
   height: 100px;
-  width: auto;
+  width: 100px;
   float: none;
   border-radius: 60px;
   margin: 8px;

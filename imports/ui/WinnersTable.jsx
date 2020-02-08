@@ -29,7 +29,7 @@ class WinnersTable extends Component {
     }
 
     render() {
-        const { tableItemName, entries, winnerClass } = this.props;
+        const { adult, tableItemName, entries, winnerClass } = this.props;
 
         const allRows = entries.slice(3, entries.length);
         const top3 = entries.slice(0,3);
@@ -40,22 +40,52 @@ class WinnersTable extends Component {
                 <thead>
                     <tr>
                         <th className="second">
-                            <img className={winnerClass} src={top3[1] ? top3[1].image : 'https://www.nexusmods.com/Contents/Images/noavatar.gif'} />
+                            {top3[1] && top3[1].nsfw && !adult 
+                            ?
+                            <span>
+                            <img className={winnerClass} src='https://www.nexusmods.com/Contents/Images/noimage.svg' />
+                            <div><a><i>NSFW Content</i></a></div>
+                            </span>
+                            :
+                            <span>
+                            <img className={winnerClass} src={top3[1] ? top3[1].image : 'https://www.nexusmods.com/Contents/Images/noimage.svg'} />
                             <div>{top3[1] ? <a href={top3[1].url}>{top3[1].name}</a> : '???'}</div>
+                            </span>
+                            }
                             {top3[1] && top3[1].game ? <div>{top3[1].game}</div> : ''}
                             <div>🥈 2nd Place</div>
                             <div>{top3[1] ? top3[1].votes : 'No'} votes</div>
                         </th>
                         <th className="first">
-                            <img className={winnerClass} src={top3[0] ? top3[0].image : 'https://www.nexusmods.com/Contents/Images/noavatar.gif'} />
+                            {top3[0] && top3[0].nsfw && !adult 
+                            ?
+                            <span>
+                            <img className={winnerClass} src='https://www.nexusmods.com/Contents/Images/noimage.svg' />
+                            <div><a><i>NSFW Content</i></a></div>
+                            </span>
+                            :
+                            <span>
+                            <img className={winnerClass} src={top3[0] ? top3[0].image : 'https://www.nexusmods.com/Contents/Images/noimage.svg'} />
                             <div>{top3[0] ? <a href={top3[0].url}>{top3[0].name}</a> : '???'}</div>
+                            </span>
+                            }
                             {top3[0] && top3[0].game ? <div>{top3[0].game}</div> : ''}
                             <div>🥇 1st Place</div>
                             <div>{top3[0] ? top3[0].votes : 'No'} votes</div>
                         </th>
                         <th className="third">
-                            <img className={winnerClass} src={top3[2] ? top3[2].image : 'https://www.nexusmods.com/Contents/Images/noavatar.gif'} />
+                            {top3[2] && top3[2].nsfw && !adult 
+                            ?
+                            <span>
+                            <img className={winnerClass} src='https://www.nexusmods.com/Contents/Images/noimage.svg' />
+                            <div><a><i>NSFW Content</i></a></div>
+                            </span>
+                            :
+                            <span>
+                            <img className={winnerClass} src={top3[2] ? top3[2].image : 'https://www.nexusmods.com/Contents/Images/noimage.svg'} />
                             <div>{top3[2] ? <a href={top3[2].url}>{top3[2].name}</a> : '???'}</div>
+                            </span>
+                            }
                             {top3[2] && top3[2].game ? <div>{top3[2].game}</div> : ''}
                             <div>🥉 3rd Place</div>
                             <div>{top3[2] ? top3[2].votes : 'No'} votes</div>
