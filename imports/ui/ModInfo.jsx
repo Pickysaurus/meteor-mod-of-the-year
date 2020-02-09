@@ -94,7 +94,7 @@ class ModInfo extends Component {
                     <img src={mod.picture_url} />
                     <div>{mod.summary}</div>
                     <button className={`modinfo-btn ${alreadyVoted ? 'modinfo-btn-active' : ''}`} onClick={this.toggleVote.bind(this)}>🏆 {alreadyVoted? 'Voted' : 'Vote'}</button>
-                    <button className="modinfo-btn">👍 Endorse</button>
+                    <button className="modinfo-btn" title="This feature is not yet implemented." disabled>👍 Endorse</button>
                     <p>You have {remainingVotes} votes remaining for {game.name}.</p>
                 </div>
                 <div className="modinfo-column modinfo-column-author">

@@ -18,6 +18,10 @@ class VotingTabs extends Component {
         this.setState({showAdult: !this.state.showAdult});
     }
 
+    componentDidCatch(error, info) {
+        // Need to add a proper render error catcher here. 
+    }
+
     render() {
         const { games, gamesLoading, user, votes, nominations } = this.props;
         const { showAdult } = this.state;

@@ -11,7 +11,7 @@ class WinnersTable extends Component {
         return winners.map((author) => {
             const position = winners.indexOf(author) + 4;
             // Only render top 10 results.
-            if (postion > 10) return '';
+            if (position > 10) return '';
 
             return (
                 <tr key={author.id}>

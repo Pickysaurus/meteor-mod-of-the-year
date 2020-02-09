@@ -320,7 +320,7 @@ th.game-title {
   margin: 0 8px;
 }
 
-.search-btn:disabled {
+.search-btn:disabled, .modinfo-btn:disabled {
   background-color: #5d5d5d;
   cursor: not-allowed;
   border: 1px dashed #c1c1c1;
@@ -459,4 +459,5 @@ th.third img {
   height: 115px;
   margin: 0 auto;
   border: 3px solid #c1c1c1;
+  margin: 8px 0;
 }
