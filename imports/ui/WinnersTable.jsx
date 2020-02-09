@@ -9,10 +9,14 @@ class WinnersTable extends Component {
     renderAdditionalWinners(winners) {
         const { adult } = this.props;
         return winners.map((author) => {
+            const position = winners.indexOf(author) + 4;
+            // Only render top 10 results.
+            if (postion > 10) return '';
+
             return (
                 <tr key={author.id}>
                     <td className="number">
-                        {winners.indexOf(author) + 4}
+                        {position}
                     </td>
                     <td className="name authorname">
                         {author.nsfw && !adult

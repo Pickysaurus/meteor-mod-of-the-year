@@ -25,7 +25,8 @@ class VotePage extends Component {
         this.setState({searchQuery: event.target.value}, () => {
             if (this.typingTimeout) clearTimeout(this.typingTimeout)
             this.typingTimeout = setTimeout(() => {
-                this.search();
+                if(this.state.searchQuery) this.search();
+                else this.setState({searchResults: null});
             }, 500);
         });
     }
@@ -34,6 +35,8 @@ class VotePage extends Component {
         const { activeGames, searchQuery } = this.state;
         const { user, games, gamesLoading, showAdult } = this.props;
         const gameId = activeGames && activeGames.length === 1 ? activeGames[0].id : -1;
+
+        if (searchQuery.length < 2) return;
 
         Meteor.call('searchMods', gameId, searchQuery, showAdult, (error, result) => {
             if (error) return alert(error);
