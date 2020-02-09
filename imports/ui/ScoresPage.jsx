@@ -7,13 +7,13 @@ import WinnersTable from './WinnersTable';
 
 class ScoresPage extends Component {
     constructor(props) {
-        super();
+        super(props);
 
         this.state = {
             authorScores: [],
             voteCount: 0,
             nominationCount: 0,
-            displayGames: [],
+            displayGame: null,
             modsOverall: []
         }
     }
@@ -28,9 +28,9 @@ class ScoresPage extends Component {
 
     updateTables() {
         const { modsOverall, authorScores, voteCount, nominationCount } = this.state;
-        const { allvotes, allNominations} = this.props;
+        const { allVotes, allNominations} = this.props;
 
-        if (!modsOverall.length || voteCount !== allvotes.length) this.calculateOverallMods();
+        if (!modsOverall.length || voteCount !== allVotes.length) this.calculateOverallMods();
         if (!authorScores.length || nominationCount !== allNominations.length) this.calculateTopAuthors();
     }
 
@@ -51,41 +51,58 @@ class ScoresPage extends Component {
     }
 
     calculateOverallMods() {
-        const { allvotes } = this.props;
-        if (!allvotes.length) return null;
+        const { allVotes } = this.props;
+        const { displayGame } = this.state;
+        if (!allVotes.length) return null;
+
+        let votes = [...allVotes];
+
+        if (displayGame) votes = votes.filter(v => v.gameTitle === displayGame);
 
         let modTable = [];
-        allvotes.forEach((vote) => {
+        votes.forEach((vote) => {
             const existingEntry = modTable.find(m => m.gameId === vote.gameId && m.id === vote.modId);
             if (!existingEntry) modTable.push({ gameId: vote.gameId, id: vote.modId, game: vote.gameTitle, gameData: vote.gameDomain, name: vote.modName, nsfw: vote.nsfw, image: vote.modImage, url: `https://nexusmods.com/${vote.gameDomain}/mods/${vote.modId}`, votes: 1 });
             else existingEntry.votes += 1;
         });
 
         modTable.sort((a,b) => a.votes > b.votes ? -1 : 1);
-        this.setState({modsOverall: modTable, voteCount: allvotes.length});
+        this.setState({modsOverall: modTable, voteCount: allVotes.length});
     }
 
-    renderTopOverallMods() {
-        const { displayGames, modsOverall } = this.state;
-
-        if(!modsOverall.length) return (<p>No votes yet.</p>);
-
-        return modsOverall.map((mod) => {
-            if (displayGames.length && displayGames.indexOf(mod.game) === -1) return '';
-            return (<p key={`${mod.gameId}-${mod.id}`}>{mod.name} - {mod.game} ({mod.votes} votes)</p>);
+    listGamesForFilter = (allVotes) => {
+        let filterGames = [];
+        allVotes.forEach(v => {
+            return filterGames.indexOf(v.gameTitle) === -1 ? filterGames.push(v.gameTitle) : undefined;
         });
 
+        return filterGames.map(g => {
+            return (
+                <option key={g}>{g}</option>
+            );
+        });
+    }
+
+    filterChange(event) {
+        if (event.target.value !== 'All games') {
+            this.setState({displayGame: event.target.value}, () => this.calculateOverallMods())
+        }
+        else this.setState({displayGame: null}, () => this.calculateOverallMods());
     }
 
     
     render() {
-        const { showAdult } = this.props;
+        const { allVotes, showAdult } = this.props;
 
         return (
             <div>
                 <h2>Top Mods</h2> 
                 <label>
                 <input type="checkbox" checked={showAdult} onChange={this.props.toggleNSFW} /> Show adult content
+                <select onChange={this.filterChange.bind(this)}>
+                    <option key="all">All games</option>
+                    {this.listGamesForFilter(allVotes)}
+                </select>
                 </label>
                 <WinnersTable entries={this.state.modsOverall} imageClass="mod-image-large" imageContClass="mod-image-large-cont first" tableItemName='Mod' adult={showAdult} />
                 <h2>Top Authors</h2>
@@ -96,11 +113,11 @@ class ScoresPage extends Component {
 }
 
 export default withTracker(() => {
-    Meteor.subscribe('allvotes');
+    Meteor.subscribe('allVotes');
     Meteor.subscribe('allnominations');
   
     return {
-        allvotes: ModVotes.find({}, { sort: { createdAt: -1 } }).fetch(),
+        allVotes: ModVotes.find({}, { sort: { createdAt: -1 } }).fetch(),
         allNominations: Nominations.find({}).fetch(),
     };
   })(ScoresPage);

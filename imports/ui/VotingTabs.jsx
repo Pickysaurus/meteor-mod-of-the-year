@@ -11,6 +11,7 @@ class VotingTabs extends Component {
         super();
         this.state = {
             showAdult: false,
+            error: null,
         };
     }
 
@@ -20,13 +21,16 @@ class VotingTabs extends Component {
 
     componentDidCatch(error, info) {
         // Need to add a proper render error catcher here. 
+        this.setState({error: {name: error, info: info}});
     }
 
     render() {
         const { games, gamesLoading, user, votes, nominations } = this.props;
-        const { showAdult } = this.state;
+        const { error, showAdult } = this.state;
 
         return (
+            <div>
+            {!error ?
             <Tabs>
                 <div label="🔥 Current Scores">
                     <ScoresPage
@@ -59,6 +63,8 @@ class VotingTabs extends Component {
                 : 'Please log in to see your votes.'}
                 </div>
             </Tabs>
+            : <div class="error">{error.name}<br />{error.info}<br />Please refresh the page and try again.</div> }
+            </div>
         );
     }
 }

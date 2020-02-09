@@ -57,7 +57,7 @@ class WinnersTable extends Component {
                             </span>
                             }
                             {top3[1] && top3[1].game ? <div>{top3[1].game}</div> : ''}
-                            <div>🥈 2nd Place</div>
+                            <div>🥈 2<sup>nd</sup> Place</div>
                             <div>{top3[1] ? top3[1].votes : 'No'} votes</div>
                         </th>
                         <th className="first">
@@ -74,7 +74,7 @@ class WinnersTable extends Component {
                             </span>
                             }
                             {top3[0] && top3[0].game ? <div>{top3[0].game}</div> : ''}
-                            <div>🥇 1st Place</div>
+                            <div>🥇 1<sup>st</sup> Place</div>
                             <div>{top3[0] ? top3[0].votes : 'No'} votes</div>
                         </th>
                         <th className="third">
@@ -91,7 +91,7 @@ class WinnersTable extends Component {
                             </span>
                             }
                             {top3[2] && top3[2].game ? <div>{top3[2].game}</div> : ''}
-                            <div>🥉 3rd Place</div>
+                            <div>🥉 3<sup>rd</sup> Place</div>
                             <div>{top3[2] ? top3[2].votes : 'No'} votes</div>
                         </th>
                     </tr>
