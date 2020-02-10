@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Meteor } from 'meteor/meteor';
 
 import Tabs from './Tabs.jsx';
 import VotePage from './VotePage.jsx';

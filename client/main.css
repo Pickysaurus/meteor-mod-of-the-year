@@ -28,14 +28,14 @@ a:hover {
   color: #f1f1f1;
 }
 
-td {
-  border-bottom: 1px solid #1c1c1c;
-}
-
 table {
   border-collapse: collapse;
   margin: 16px auto;
-  width: 90%;
+  width: 95%;
+}
+
+td {
+  border-bottom: 1px solid #1c1c1c;
 }
 
 th {
@@ -210,19 +210,15 @@ th.game-title {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 1.15em;
-  /* border-radius: 5px 5px 0 0; */
 }
 
 .tab-list-item:hover {
   cursor: pointer;
-  /* background-color: #b4762c; */
   border-bottom: 3px solid #b4762c;
 }
 
 .tab-list-active {
-  /* background-color: #1c1c1c; */
   border-bottom: 3px solid #da8e35;
-  /* border-width: 1px 1px 0 1px; */
 }
 
 .tab-content {
@@ -264,7 +260,6 @@ th.game-title {
   background-color: #1c1c1c;
   margin: 8px auto;
   border: 1px solid #1c1c1c;
-  /* border-bottom: 1px solid #c1c1c1; */
   font-style: italic;
 }
 
@@ -428,18 +423,6 @@ th.first {
   border: 4px outset darkgoldenrod;
 }
 
-/* th.first img {
-  border-style: solid;
-}
-
-th.second img {
-  border: 4px solid silver;
-}
-
-th.third img {
-  border: 4px solid #cd7f32;
-} */
-
 .user-image-large {
   height: 100px;
   width: 100px;
@@ -453,11 +436,87 @@ th.third img {
   border-style: hidden;
 }
 
-.mod-image-large-cont {
-  width: 200px;
-  overflow: hidden;
-  height: 115px;
+.winners-container {
+  padding: 16px 0;
+  display: flex;
+  width: 100%;
   margin: 0 auto;
-  border: 3px solid #c1c1c1;
-  margin: 8px 0;
+}
+
+.winners-container > div {
+  background: #1c1c1c;
+  display: inline-table;
+  width: 300px;
+  height: 250px;
+  border: 1px solid #ff0000;
+  border-radius: 15px;
+  margin: 25px 5px;
+  text-align: center;
+}
+
+.winners-container > div.firstPlace {
+  margin: 0 auto;
+  z-index: 5;
+  height: 300px;
+  width: 400px;
+  border: 5px outset darkgoldenrod;
+  font-size: 1.25em;
+}
+
+.winners-container > div.firstPlace:hover {
+  box-shadow: 0 5px 15px #fdec6e;
+  -moz-transition: all 0.3s ease-in;
+  -o-transition: all 0.3s ease-in;
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+
+
+.winners-container > div.secondPlace {
+  border: 4px outset silver;
+  margin-right: -75px;
+}
+
+.winners-container > div.thirdPlace {
+  border: 4px outset #cd7f32;
+  margin-left: -75px;
+}
+
+.winner-image-container {
+  width: 200px;
+  height: 115px;
+  overflow: hidden;
+  margin: 16px auto;
+  border: 2px solid #c1c1c1;
+}
+
+.user-image-cont {
+  border: none;
+}
+
+.winner-image-container > img { 
+  width: 200px;
+}
+
+.winner-image-container > img.user-image { 
+  width: 100px;
+}
+
+.winner-text {
+  margin: 8px auto;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 350px;
+}
+
+.winner-text > a {
+  font-family: Montserrat, sans-serif;
+  font-weight: 600;
+}
+
+.firstPlace, .secondPlace, .thirdPlace {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

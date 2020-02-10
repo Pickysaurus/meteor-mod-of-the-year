@@ -104,9 +104,9 @@ class ScoresPage extends Component {
                     {this.listGamesForFilter(allVotes)}
                 </select>
                 </label>
-                <WinnersTable entries={this.state.modsOverall} imageClass="mod-image-large" imageContClass="mod-image-large-cont first" tableItemName='Mod' adult={showAdult} />
+                <WinnersTable entries={this.state.modsOverall} tableItemName='Mod' adult={showAdult} />
                 <h2>Top Authors</h2>
-                <WinnersTable entries={this.state.authorScores} imageClass="user-image user-image-large" tableItemName="Author" adult={showAdult} />
+                <WinnersTable entries={this.state.authorScores} imageClass="user-image user-image-large" imageContClass="user-image-cont" tableItemName="Author" adult={showAdult} />
             </div>
         );
     }
