@@ -445,7 +445,7 @@ th.first {
 
 .winners-container > div {
   background: #1c1c1c;
-  display: inline-table;
+  display: inline;
   width: 300px;
   height: 250px;
   border: 1px solid #ff0000;
@@ -507,6 +507,10 @@ th.first {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  width: 200px;
+}
+
+.winner-text-first {
   width: 350px;
 }
 

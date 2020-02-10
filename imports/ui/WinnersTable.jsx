@@ -56,7 +56,7 @@ class WinnersTable extends Component {
                     <div className={`winner-image-container ${imageContClass || ''}`}>
                     <img className={imageClass || ''} src={!top3[0] || !top3[0].image || (top3[0].nsfw && !adult) ? 'https://www.nexusmods.com/Contents/Images/noimage.svg' : top3[0].image} />
                     </div>
-                    <div className="winner-text">
+                    <div className="winner-text winner-text-first">
                     <a href={!top3[0] || (top3[0].nsfw && !adult) ? '' : top3[0].url} title={!top3[0] ? '???' : (top3[0].nsfw && !adult) ? 'NSFW Content' : top3[0].name }>{!top3[0] ? '???' : (top3[0].nsfw && !adult) ? 'NSFW Content' : top3[0].name }</a>
                     {top3[0] && top3[0].game ? <div>{top3[0].game}</div> : ''}
                     <div>🥇 1<sup>st</sup> Place</div>
