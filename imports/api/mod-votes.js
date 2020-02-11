@@ -8,7 +8,7 @@ if (Meteor.isServer) {
     Meteor.publish('modvotes', function modVotesPublication () {
         return this.userId ? ModVotes.find({ owner: parseInt(this.userId) }) : [];
     });
-    Meteor.publish('allvotes', function allvotesPublication () {
+    Meteor.publish('allVotes', function allvotesPublication () {
         return ModVotes.find({}, { fields: { owner: 0 } });
     })
 }

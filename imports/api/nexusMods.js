@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { check } from 'meteor/check';
+import { check, Match } from 'meteor/check';
 import Nexus from '@nexusmods/nexus-api';
 import requestPromise from 'request-promise-native';
 
@@ -25,6 +25,42 @@ if (Meteor.isServer) {
           throw new Meteor.Error('Error validating API key'+err);
         }
   
+      },
+      getEndorsements: async function (apiKey) {
+        check(apiKey, String);
+
+        try {
+          await configureNexusClient(apiKey);
+          // TODO Add proper headers
+          const endorsements = await requestPromise({url: 'https://api.nexusmods.com/v1/user/endorsements.json', headers:{ apikey: apiKey }});
+          return JSON.parse(endorsements);
+        }
+        catch(err){
+          console.error(err);
+          throw new Meteor.Error('Error getting Endorsements', err)
+        }
+        
+      },
+      endorseMod: async function (apiKey, modId, modVersion, status, gameId) {
+        const endorseType = Match.Where((x) => x === 'endorse' || x === 'abstain');
+        check(apiKey, String);
+        check(modId, Number);
+        check(modVersion, String);
+        check(status, endorseType);
+        check(gameId, String);
+
+        console.log(status, modId, gameId);
+
+        try {
+          await configureNexusClient(apiKey);
+          await NexusModsClient.endorseMod(modId, modVersion, status, gameId);
+          return true;
+        }
+        catch(err) {
+          console.error(err.message);
+          throw new Meteor.Error(err.message);
+        }
+
       },
       logout: function () {
         this.setUserId(null);

@@ -20,6 +20,8 @@ class App extends Component {
       gamesLoading: false,
       games: [],
     }
+
+    this.updateGames = this.updateGames.bind(this);
   }
 
   setLogin(userData) {
@@ -27,8 +29,15 @@ class App extends Component {
 
     this.setState({loggingIn: true}, () => {
       if (userData) {
-        this.setState({ user: userData, apiKey: userData.key }, () => sessionStorage.setItem('key', userData.key));
-        this.getGames();
+        this.setState({ user: userData, apiKey: userData.key }, () => {
+          sessionStorage.setItem('key', userData.key);
+          this.getGames(this);
+          Meteor.call('getEndorsements', userData.key, (error, result) => {
+            if (error) return alert(error);
+            userData.endorsements = result;
+            this.setState({user: userData});
+          })
+        });
       }
       else this.setState({ user: null, apiKey: null }, () => {
         Meteor.call('logout');
@@ -37,6 +46,15 @@ class App extends Component {
 
       this.setState({loggingIn: false})
     });
+  }
+
+  setLocalEndorsement(newData) {
+    const { user } = this.state;
+
+    let newUser = {...user};
+    newUser.endorsements = newData;
+
+    this.setState({ user: newUser });
   }
 
   async getGames() {
@@ -76,6 +94,7 @@ updateGames(games) {
             user={user} 
             votes={this.props.votes} 
             nominations={this.props.nominations} 
+            setLocalEndorsement={this.setLocalEndorsement.bind(this)}
           />
         </div>
         <Footer />

@@ -50,6 +50,7 @@ class VotingTabs extends Component {
                         getGames={this.props.getGames}
                         showAdult={showAdult}
                         toggleNSFW={this.toggleNSFW.bind(this)}
+                        setLocalEndorsement={this.props.setLocalEndorsement}
                     />
                 </div>
                 <div label="My Votes">

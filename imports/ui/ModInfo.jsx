@@ -63,7 +63,7 @@ class ModInfo extends Component {
     }
 
     componentDidUpdate() {
-        if (this.state.alert) setTimeout(() => this.setState({alert: null}), 3000);
+        if (this.state.alert) setTimeout(() => this.setState({alert: null}), 5000);
     }
 
     getAuthorAvatar(id) {
@@ -75,14 +75,38 @@ class ModInfo extends Component {
             return this.setState({avatar: result});
         })
     }
+
+    toggleEndorse() {
+        const { user, game, mod } = this.props;
+        let endorsements = [...user.endorsements];
+        const currentEndorsement = endorsements ? endorsements.find(e => e.domain_name === game.domain_name && e.mod_id === mod.mod_id) : undefined;
+        const newState = currentEndorsement && currentEndorsement.status === "Endorsed" ? "abstain" : "endorse";
+        Meteor.call('endorseMod', user.key, mod.mod_id, mod.version, newState, game.domain_name, (error, result) => {
+            if (error) {
+                if (error.error === "NOT_DOWNLOADED_MOD") return this.setState({ alert:{ error: true, message: "You have not downloaded this mod, so you cannot endorse it." } })
+                if (error.error === "TOO_SOON_AFTER_DOWNLOAD") return this.setState({ alert: { error: true, message: "You must wait at least 15 minutes to endorse this mod." } });
+                else return this.setState( { alert: { error: true, message: `Error when attempting to toggle endorsement: ${error.error}`} } )
+            };
+
+            if (currentEndorsement) currentEndorsement.status = newState === "endorse" ? "Endorsed" : "Abstained"; 
+            else endorsements.push({ date: new Date(), domain_name: game.domain_name, mod_id: mod.mod_id, status: newState === "endorse" ? "Endorsed" : "Abstained", version: mod.version });
+
+            this.props.setLocalEndorsement(endorsements);
+
+            return this.setState({ alert: { error: false, message: newState === "endorse" ? `You have successfully endorsed ${mod.name}.` : `You are no longer endorsing ${mod.name}.` } });
+        });
+    }
     
     render() {
-        const { game, mod, votes, nominations } = this.props;
+        const { user, game, mod, votes, nominations } = this.props;
         if (!this.state.avatar) this.getAuthorAvatar(mod.user.member_id);
         const alreadyVoted = votes.find(v => v.gameId === mod.game_id && v.modId === mod.mod_id) ? true : false;
         const alreadyNominated = nominations.find(n => n.authorId === mod.user.member_id) ? true : false;
         const remainingVotes = (5 - votes.filter(v => v.gameId === mod.game_id).length);
         const remainingNominations = (10 - nominations.length);
+        const gameName = game ? game.name : 'this game';
+        const endorsement = game && user.endorsements ? user.endorsements.find(e => e.domain_name === game.domain_name && e.mod_id === mod.mod_id) : undefined;
+        const currentlyEndorsed = endorsement && endorsement.status === "Endorsed" ? true : false;
 
         return (
             <div>
@@ -94,8 +118,8 @@ class ModInfo extends Component {
                     <img src={mod.picture_url} />
                     <div>{mod.summary}</div>
                     <button className={`modinfo-btn ${alreadyVoted ? 'modinfo-btn-active' : ''}`} onClick={this.toggleVote.bind(this)}>🏆 {alreadyVoted? 'Voted' : 'Vote'}</button>
-                    <button className="modinfo-btn" title="This feature is not yet implemented." disabled>👍 Endorse</button>
-                    <p>You have {remainingVotes} votes remaining for {game.name}.</p>
+                    <button className={`modinfo-btn ${currentlyEndorsed ? 'modinfo-btn-active' : ''}`} disabled={!user.endorsements} onClick={this.toggleEndorse.bind(this)}>👍 {currentlyEndorsed ? 'Endorsed' : 'Endorse'}</button>
+                    <p>You have {remainingVotes} votes remaining for {gameName}.</p>
                 </div>
                 <div className="modinfo-column modinfo-column-author">
                     <h2>Author</h2>

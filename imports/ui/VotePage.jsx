@@ -93,7 +93,8 @@ class VotePage extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if ((prevProps.showAdult !== this.props.showAdult) && this.state.searchQuery) this.search(this);
+        const { user, gamesLoading, games, showAdult } = this.props;
+        if ((prevProps.showAdult !== showAdult) && this.state.searchQuery) this.search(this);
     }
 
     componentDidMount() {
@@ -132,11 +133,13 @@ class VotePage extends Component {
                 {searchResults ? this.renderResults() : ''}
                 </div>
                 : <ModInfo 
+                    user={user}
                     mod={activeMod} 
                     setActiveMod={this.setActiveMod.bind(this)} 
                     votes={votes} user={user} 
                     game={games.find(g => g.id === activeMod.game_id)} 
                     nominations={nominations}
+                    setLocalEndorsement={this.props.setLocalEndorsement}
                 />}
             </div>
         )
