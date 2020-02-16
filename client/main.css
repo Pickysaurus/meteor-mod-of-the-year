@@ -15,7 +15,7 @@ body {
 }
 
 h1, h2, h3, th {
-  font-family: 'Montserrat', sans-serif;;
+  font-family: 'Montserrat', sans-serif;
 }
 
 a {
@@ -280,11 +280,12 @@ th.game-title {
 }
 
 .react-dropdown-select-option {
-  color:rgb(76,76,76);
+  color: #fff;
   border: 1px solid #5d5d5d;
   font-weight: 500;
-  background-color: rgb(208,208,208);
+  /* background-color: rgb(208,208,208); */
   text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .search-box {
@@ -345,6 +346,10 @@ th.game-title {
   font-weight: 700;
 }
 
+.modinfo-btn-active:hover {
+  color: #fff;
+}
+
 .modinfo-btn:hover {
   background-color: #b4762c;
 }
@@ -401,6 +406,10 @@ th.game-title {
 }
 
 /* Winners Tables */
+
+.winners-table-container {
+  margin-bottom: 4em;
+}
 
 .winners-table, .winners-table th {
   border-collapse: separate;
@@ -523,4 +532,30 @@ th.first {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+select, input[type="checkbox"] {
+  margin: 0 8px;
+}
+
+label {
+  line-height: 2em;
+}
+
+select {
+  color: #ccc;
+  background-color: #1c1c1c;
+  height: 2em;
+  border: 1px solid rgb(204, 204, 204, 0.5);
+  padding-left: 8px;
+  font-style: italic;
+}
+
+select:focus, option:active, option:focus {
+  outline-color: #cd7f32;
+}
+
+.gameFilter {
+  text-align: right;
+  float: right;
 }

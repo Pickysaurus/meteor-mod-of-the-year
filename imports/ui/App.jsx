@@ -35,16 +35,15 @@ class App extends Component {
           Meteor.call('getEndorsements', userData.key, (error, result) => {
             if (error) return alert(error);
             userData.endorsements = result;
-            this.setState({user: userData});
+            this.setState({user: userData, loggingIn: false});
           })
         });
       }
       else this.setState({ user: null, apiKey: null }, () => {
         Meteor.call('logout');
         sessionStorage.removeItem('key');
+        this.setState({loggingIn: false})
       });
-
-      this.setState({loggingIn: false})
     });
   }
 

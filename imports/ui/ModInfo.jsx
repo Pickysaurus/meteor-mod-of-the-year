@@ -119,6 +119,7 @@ class ModInfo extends Component {
                     <div>{mod.summary}</div>
                     <button className={`modinfo-btn ${alreadyVoted ? 'modinfo-btn-active' : ''}`} onClick={this.toggleVote.bind(this)}>🏆 {alreadyVoted? 'Voted' : 'Vote'}</button>
                     <button className={`modinfo-btn ${currentlyEndorsed ? 'modinfo-btn-active' : ''}`} disabled={!user.endorsements} onClick={this.toggleEndorse.bind(this)}>👍 {currentlyEndorsed ? 'Endorsed' : 'Endorse'}</button>
+                    <button className="modinfo-btn" onClick={() => window.open(`https://nexusmods.com/${mod.domain_name}/mods/${mod.mod_id}`, '_blank')}>🌐 Visit</button>
                     <p>You have {remainingVotes} votes remaining for {gameName}.</p>
                 </div>
                 <div className="modinfo-column modinfo-column-author">

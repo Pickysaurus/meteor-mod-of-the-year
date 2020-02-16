@@ -97,13 +97,20 @@ class ScoresPage extends Component {
         return (
             <div>
                 <h2>Top Mods</h2> 
+                <div className="gameFilter">
                 <label>
-                <input type="checkbox" checked={showAdult} onChange={this.props.toggleNSFW} /> Show adult content
+                    Filter by game: 
                 <select onChange={this.filterChange.bind(this)}>
-                    <option key="all">All games</option>
-                    {this.listGamesForFilter(allVotes)}
+                <option key="all">All games</option>
+                {this.listGamesForFilter(allVotes)}
                 </select>
                 </label>
+                </div>
+                <div>
+                <label>
+                <input type="checkbox" checked={showAdult} onChange={this.props.toggleNSFW} /> Show adult content
+                </label>
+                </div>
                 <WinnersTable entries={this.state.modsOverall} tableItemName='Mod' adult={showAdult} />
                 <h2>Top Authors</h2>
                 <WinnersTable entries={this.state.authorScores} imageClass="user-image user-image-large" imageContClass="user-image-cont" tableItemName="Author" adult={showAdult} />
